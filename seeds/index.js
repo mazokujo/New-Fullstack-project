@@ -13,7 +13,6 @@ mongoose.connect('mongodb://localhost:27017/yelpcamp', {
     useUnifiedTopology: true,
     useCreateIndex: true
 });
-
 // handling error in mongoose connection
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -21,6 +20,7 @@ db.once('open', function () {
     // we're connected!
     console.log("Database connected")
 });
+
 // const sample is a function that can extract any element inside the array.
 const sample = array => array[Math.floor(Math.random() * array.length)];
 // we create 50 new campgrounds
@@ -32,11 +32,17 @@ const seedDB = async () => {
         //the const cities contains a 1000 cities, therefore we create const random1000
         //random 1000 can generate number between 0 to 1000
         const random1000 = Math.floor(Math.random() * 1000);
+        //create random price
+        const randomprice = Math.floor(Math.random() * 1500) + 500;
         //new campground containing cities name and state name
         const camp = new Campground({
             location: `${cities[random1000].city}, ${cities[random1000].state}`,
             //sample function is used to pick element at random inside descriptors and places arrays
-            title: `${sample(descriptors)} ${sample(places)}`
+            title: `${sample(descriptors)} ${sample(places)}`,
+            //generate random pictures from unsplash
+            image: 'https://source.unsplash.com/collection//483251',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis recusandae voluptatem tempora dolores sed exercitationem nostrum voluptatibus illum voluptas dolorem et animi, maiores magni molestiae voluptatum in dolor suscipit ducimus?',
+            price: randomprice
         });
         // save new datas in Mongo
         await camp.save();

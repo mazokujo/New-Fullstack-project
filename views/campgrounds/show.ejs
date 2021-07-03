@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Details</title>
-</head>
-
-<body>
+<%- layout('layouts/boilerplate') %>
     <h1> Details on camp: <b>
             <%=item.title%>
         </b>
@@ -21,11 +11,14 @@
         </b>
 
     </div>
+    <div><img style=" width : 100; height : 100" src="<%=item.image%>" alt=""></div>
+    <div><b>Description:</b>
+        <%=item.description%>
+    </div>
+    <div><b>Price:</b> This camp is priced at $<%=item.price%> a week
+    </div>
     <div><a href="/campground">Back to all campgrounds</a></div>
     <div><a href="/campground/<%=item._id%>/edit">Edit campground</a></div>
     <form action="/campground/<%=item._id%>?_method=DELETE" method="POST">
         <button>Delete Campground</button>
     </form>
-</body>
-
-</html>

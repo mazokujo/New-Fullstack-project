@@ -2,6 +2,9 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const mongoose = require('mongoose');
+//ejs-mate (to improve html template)
+const ejsMate = require('ejs-mate');
+
 // require Campground model
 const Campground = require('./models/Campground');
 //require method override for put, push, delete route
@@ -25,6 +28,7 @@ db.once('open', function () {
 app.use(methodOverride('_method'));
 
 // setting ejs in view engine
+app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
 
