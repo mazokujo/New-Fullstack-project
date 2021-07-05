@@ -1,16 +1,58 @@
 <%- layout('layouts/boilerplate') %>
-    <h1>Edit campground <%=item.title%>
+    <h1 class="text-center">Edit campground <%=item.title%>
     </h1>
-    <form action="/campground/<%=item._id%>?_method=PUT" method="POST">
-        <label for="title">Camp's title</label>
-        <!-- name = campground[name] in case multiple data are inserted  -->
-        <input type="text" id="title" placeholder="insert the title" name="campground[title]" value="<%=item.title%>">
+    <!-- old Form -->
+
+    <!-- <form action="/campground/<%=item._id%>?_method=PUT" method="POST">
+        <label for="title">Camp's title</label> -->
+    <!-- name = campground[name] in case multiple data are inserted  -->
+    <!-- <input type="text" id="title" placeholder="insert the title" name="campground[title]" value="<%=item.title%>">
         <label for="location">Camp's location</label>
         <input type="text" id="location" placeholder="insert the location" name="campground[location]"
             value="<%=item.location%>">
         <button>Edit Campground</button>
-    </form>
-    <form action="/campground/<%=item._id%>?_method=DELETE" method="POST">
-        <button>Delete Campground</button>
-    </form>
-    <a href="/campground">Cancel</a>
+    </form> -->
+
+    <!-- New Bootstrap form -->
+
+    <div class="col-6 offset-3">
+        <form action="/campground/<%=item._id%>?_method=PUT" method="POST">
+            <div class="form-group">
+                <label for="title"><b>Camp's title</b></label>
+                <input type="text" class="form-control" id="title" name="campground[title]"
+                    placeholder="insert the title" value="<%=item.title%>">
+            </div>
+            <div class="form-group my-3">
+                <label for="location"><b>Camp's location</b></label>
+                <input type="text" class="form-control" id="location" name="campground[location]"
+                    placeholder="insert the location" value="<%=item.location%>">
+            </div>
+            <div class="form-group my-3">
+                <label for="image"><b>Image URL</b></label>
+                <input type="text" class="form-control" id="image" name="campground[image]"
+                    placeholder="Insert image URL" value="<%=item.image%>">
+            </div>
+            <div class="form-group my-3 ">
+                <label for="description"><b>Camp's description</b></label>
+                <textarea class="form-control" id="desciption" name="" id="description" cols="30"
+                    rows="10"><%=item.description%> </textarea>
+
+            </div>
+            <div class="form-group my-3">
+                <label for="price"><b>Camp's price</b></label>
+                <input type="number" class="form-control" id="price" name="campground[price]"
+                    placeholder="insert the price" value="<%=item.price%>">
+            </div>
+            <div class="form-group my-3">
+                <button type="submit" class="btn btn-success">Edit Campground</button>
+                <a href="/campground" class="btn btn-danger">Cancel</a>
+            </div>
+
+
+        </form>
+
+        <form action="/campground/<%=item._id%>?_method=DELETE" method="POST">
+            <button class="btn btn-warning">Delete Campground</button>
+        </form>
+
+    </div>

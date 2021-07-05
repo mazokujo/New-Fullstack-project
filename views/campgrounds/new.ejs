@@ -1,11 +1,51 @@
 <%- layout('layouts/boilerplate') %>
-    <h1>Make New Campground</h1>
-    <form action="/campground" method="POST">
-        <label for="title">Camp's title</label>
-        <!-- name = campground[name] in case multiple data are inserted  -->
-        <input type="text" id="title" placeholder="insert the title" name="campground[title]">
+    <h1 class="text-center">Make New Campground</h1>
+    <!-- old form -->
+
+    <!-- <form action="/campground" method="POST">
+        <label for="title">Camp's title</label> -->
+    <!-- name = campground[name] in case multiple data are inserted  -->
+    <!-- <input type="text" id="title" placeholder="insert the title" name="campground[title]">
         <label for="location">Camp's location</label>
         <input type="text" id="location" placeholder="insert the location" name="campground[location]">
         <button>Make new Campground</button>
     </form>
-    <a href="/campground">Cancel</a>
+    <a href="/campground">Cancel</a> -->
+
+    <!-- New Bootstrap form -->
+    <div class="col-6 offset-3">
+        <form action="/campground" method="POST">
+            <div class="form-group">
+                <label for="title"><b>Camp's title</b></label>
+                <input type="text" class="form-control" id="title" name="campground[title]"
+                    placeholder="insert the title">
+            </div>
+            <div class="form-group my-3">
+                <label for="location"><b>Camp's location</b></label>
+                <input type="text" class="form-control" id="location" name="campground[location]"
+                    placeholder="insert the location">
+            </div>
+            <div class="form-group my-3">
+                <label for="image"><b>Image URL</b></label>
+                <input type="text" class="form-control" id="image" name="campground[image]"
+                    placeholder="Insert image URL">
+            </div>
+            <div class="form-group my-3">
+                <label for="description"><b>Camp's description</b></label>
+                <input type="text" class="form-control" id="desciption" name="campground[description]"
+                    placeholder="insert the description">
+            </div>
+            <div class="form-group my-3">
+                <label for="price"><b>Camp's price</b></label>
+                <input type="number" class="form-control" id="price" name="campground[price]"
+                    placeholder="insert the price">
+            </div>
+            <div class="form-group my-3">
+                <button type="submit" class="btn btn-primary">Make a new Campground</button>
+                <a href="/campground" class="btn btn-danger">Cancel</a>
+            </div>
+
+
+        </form>
+
+    </div>
