@@ -16,32 +16,48 @@
     <!-- New Bootstrap form -->
 
     <div class="col-6 offset-3">
-        <form action="/campground/<%=item._id%>?_method=PUT" method="POST">
+        <form action="/campground/<%=item._id%>?_method=PUT" method="POST" novalidate class="needs-validation">
             <div class="form-group">
                 <label for="title"><b>Camp's title</b></label>
                 <input type="text" class="form-control" id="title" name="campground[title]"
-                    placeholder="insert the title" value="<%=item.title%>">
+                    placeholder="insert the title" value="<%=item.title%>" required>
+
             </div>
             <div class="form-group my-3">
                 <label for="location"><b>Camp's location</b></label>
                 <input type="text" class="form-control" id="location" name="campground[location]"
-                    placeholder="insert the location" value="<%=item.location%>">
+                    placeholder="insert the location" value="<%=item.location%>" required>
+                <div class="valid-feedback">
+                    Awsome it's working!
+                </div>
+            </div>
+            <div class="valid-feedback">
+                Awsome it's working!
             </div>
             <div class="form-group my-3">
                 <label for="image"><b>Image URL</b></label>
                 <input type="text" class="form-control" id="image" name="campground[image]"
-                    placeholder="Insert image URL" value="<%=item.image%>">
+                    placeholder="Insert image URL" value="<%=item.image%>" required>
+                <div class="valid-feedback">
+                    Awsome it's working!
+                </div>
             </div>
             <div class="form-group my-3 ">
                 <label for="description"><b>Camp's description</b></label>
-                <textarea class="form-control" id="desciption" name="" id="description" cols="30"
-                    rows="10"><%=item.description%> </textarea>
+                <textarea class="form-control" id="desciption" name="" id="description" cols="30" rows="10"
+                    required><%=item.description%> </textarea>
+                <div class="valid-feedback">
+                    Awsome it's working!
+                </div>
 
             </div>
             <div class="form-group my-3">
                 <label for="price"><b>Camp's price</b></label>
                 <input type="number" class="form-control" id="price" name="campground[price]"
-                    placeholder="insert the price" value="<%=item.price%>">
+                    placeholder="insert the price" value="<%=item.price%>" required>
+                <div class="valid-feedback">
+                    Awsome it's working!
+                </div>
             </div>
             <div class="form-group my-3">
                 <button type="submit" class="btn btn-success">Edit Campground</button>

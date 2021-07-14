@@ -14,31 +14,46 @@
 
     <!-- New Bootstrap form -->
     <div class="col-6 offset-3">
-        <form action="/campground" method="POST">
+        <form action="/campground" method="POST" class="needs-validation" novalidate>
             <div class="form-group">
                 <label for="title"><b>Camp's title</b></label>
                 <input type="text" class="form-control" id="title" name="campground[title]"
-                    placeholder="insert the title">
+                    placeholder="insert the title" required>
+                <div class="valid-feedback">
+                    Awsome it's working!
+                </div>
             </div>
             <div class="form-group my-3">
                 <label for="location"><b>Camp's location</b></label>
                 <input type="text" class="form-control" id="location" name="campground[location]"
-                    placeholder="insert the location">
+                    placeholder="insert the location" required>
+                <div class="valid-feedback">
+                    Awsome it's working!
+                </div>
             </div>
             <div class="form-group my-3">
                 <label for="image"><b>Image URL</b></label>
                 <input type="text" class="form-control" id="image" name="campground[image]"
-                    placeholder="Insert image URL">
+                    placeholder="Insert image URL" required>
+                <div class="valid-feedback">
+                    Awsome it's working!
+                </div>
             </div>
             <div class="form-group my-3">
                 <label for="description"><b>Camp's description</b></label>
-                <input type="text" class="form-control" id="desciption" name="campground[description]"
-                    placeholder="insert the description">
+                <textarea cols="30" rows="10" class="form-control" id="desciption" name="campground[description]"
+                    placeholder="insert the description" required></textarea>
+                <div class="valid-feedback">
+                    Awsome it's working!
+                </div>
             </div>
             <div class="form-group my-3">
                 <label for="price"><b>Camp's price</b></label>
                 <input type="number" class="form-control" id="price" name="campground[price]"
-                    placeholder="insert the price">
+                    placeholder="insert the price" required>
+                <div class="valid-feedback">
+                    Awsome it's working!
+                </div>
             </div>
             <div class="form-group my-3">
                 <button type="submit" class="btn btn-primary">Make a new Campground</button>
