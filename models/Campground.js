@@ -17,18 +17,21 @@ const CampgroundSchema = new Schema({
 })
 //exporting Campground model
 
-const Campground = mongoose.model('Campground', CampgroundSchema);
+
 // mongoose delete middleware
 //use of mongoose middleware to delete a farm and associated product
 
 CampgroundSchema.post('findOneAndDelete', async function (camp) {
-
-    if (camp) {
-        const res = await Review.deleteMany({ _id: { $in: camp.review } })
+    console.log(camp);
+    if (camp.review.length) {
+        const res = await Review.deleteMany({ _id: { $in: camp.review } });
         console.log(res);
     }
 })
 
+
+
+const Campground = mongoose.model('Campground', CampgroundSchema);
 module.exports = Campground;
 
 
