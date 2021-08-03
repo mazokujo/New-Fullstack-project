@@ -24,16 +24,14 @@ const validateCampground = (req, res, next) => {
     }
 }
 
-
-
-
-
+//loggedin middleware
+const isLoggedin = require('../middleware');
 
 //create a new campground
-router.get('/new', (req, res) => {
+router.get('/new', isLoggedin, (req, res) => {
     res.render('campgrounds/new');
 })
-router.post('/', validateCampground, wrapAsync(async (req, res) => {
+router.post('/', validateCampground, isLoggedin, wrapAsync(async (req, res) => {
     //if (!req.body.campground) throw new AppError('invalid Campground', 400)
     // const result = campgroundSchema.validate(req.body);
     // console.log(result);
