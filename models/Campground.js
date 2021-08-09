@@ -8,12 +8,15 @@ const CampgroundSchema = new Schema({
     image: String,
     description: String,
     location: String,
-    review: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Review'
-        }
-    ]
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    review: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Review'
+    }]
+
 })
 //exporting Campground model
 

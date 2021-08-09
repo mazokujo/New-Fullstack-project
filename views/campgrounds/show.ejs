@@ -1,4 +1,6 @@
 <%- layout('layouts/boilerplate') %>
+    <link rel="stylesheet" href="/cssSheets/star.css">
+
     <h1 class="text-center"> Details on Camp: <b>
             <%=item.title%>
         </b>
@@ -17,43 +19,68 @@
                     <p class="card-text"><b>Description:</b>
                         <%=item.description%>
                     </p>
+
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><b>Price:</b> This camp is priced at $<%=item.price%> a week</li>
-                    <!-- <li class="list-group-item">Dapibus ac facilisis in</li>
-            <li class="list-group-item">Vestibulum at eros</li> -->
+                    <li class="list-group-item"><b>Price:</b> This camp is priced at $<%=item.price%>,
+                            a week</li>
+                    <li class="list-group-item"><b>Submitted by:</b>
+                        <%=item.owner.username%>
+                    </li>
+
+
+
+
+
                 </ul>
-                <div class="card-body">
-                    <div class="mb-3">
-                        <a class="card-link btn btn-success" href="/campground">Back to all campgrounds</a>
+                <!-- if you are not logged in and the author of the post you cant delete or edit the campground -->
+                <% if(currentUser && item.owner.equals(currentUser._id)){%>
+                    <div class="card-body ">
+                        <div class="mb-3 d-flex flex-row ">
+                            <form action="/campground/<%=item._id%>?_method=DELETE" method="POST" class="card-link ">
+                                <button class="btn btn-danger">Delete Campground</button>
+                            </form>
+                            <a Class="card-link btn btn-success " href="/campground/<%=item._id%>/edit">Edit
+                                campground</a>
+                        </div>
 
-                        <a Class="card-link btn btn-success" href="/campground/<%=item._id%>/edit">Edit
-                            campground</a>
                     </div>
-
-                </div>
+                    <% } %>
             </div>
             <div class="my-3">
-                <form action="/campground/<%=item._id%>?_method=DELETE" method="POST">
-                    <button class="btn btn-danger">Delete Campground</button>
-                </form>
+                <a class="card-link btn btn-success" href="/campground">Back to all campgrounds</a>
 
             </div>
 
 
         </div>
-        <!-- second column -->
+        <!-- You cant create a review for a page unless you are logged in and the author of the campground -->
+
         <div class="col-6">
-            <!-- bootstrap card  -->
-            <!-- <div class="card">
-            <div class="card-body">
-              This is some text within a card body.
-            </div>
-          </div> -->
-            <div style="width: 18rem;">
-                <form action="/campground/<%=item._id%>/review" method="POST" class="needs-validation" novalidate>
-                    <div class="mb-3">
-                        <div>
+            <% if(currentUser){%>
+                <h2>Submit your Review</h2>
+                <div style="width: 18rem;">
+                    <form action="/campground/<%=item._id%>/review" method="POST" class="needs-validation" novalidate>
+                        <fieldset class="starability-checkmark">
+                            <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1"
+                                checked aria-label="No rating." />
+                            <input type="radio" id="first-rate1" name="review[rating]" value="1" class="form-control"
+                                required />
+                            <label for="first-rate1" title="Terrible">1 star</label>
+                            <input type="radio" id="first-rate2" name="review[rating]" value="2" class="form-control"
+                                required />
+                            <label for="first-rate2" title="Not good">2 stars</label>
+                            <input type="radio" id="first-rate3" name="review[rating]" value="3" class="form-control"
+                                required />
+                            <label for="first-rate3" title="Average">3 stars</label>
+                            <input type="radio" id="first-rate4" name="review[rating]" value="4" class="form-control"
+                                required />
+                            <label for="first-rate4" title="Very good">4 stars</label>
+                            <input type="radio" id="first-rate5" name="review[rating]" value="5" class="form-control"
+                                required />
+                            <label for="first-rate5" title="Amazing">5 stars</label>
+                        </fieldset>
+                        <div class="mb-3">
                             <label class="form-label" for="text">Leave us your Comment</label>
                             <textarea class="form-control" name="review[text]" id="text" cols="30" rows="3"
                                 required></textarea>
@@ -61,33 +88,38 @@
                                 Awsome it's working!
                             </div>
                         </div>
-                        <div>
-                            <label for="rating">Rating</label>
-                            <input type="number" min="1" max="5" value="1" id="rating" name="review[rating]">
-                            <Button class="btn-success">Submit Review</Button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-            <h2>Check out our Reviews!!!</h2>
-            <% for(let rev of item.review){%>
-
-                <div class="card my-3" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <b>Rating:
-                                <%=rev.rating%>
-                            </b>
-                        </h5>
-                        <p class="card-text">
-                            <%=rev.text%>
-                        </p>
-                        <form action="/campground/<%=item._id%>/review/<%=rev._id%>?_method=DELETE" method="POST">
-                            <button class="btn-danger mb-3">Delete comment</button>
-                        </form>
-                    </div>
+                        <div> <Button class="btn-success">Submit Review</Button></div>
+                    </form>
                 </div>
-                <%} %>
+
+
+                <% } %>
+                    <h2>Check out our Reviews!!!</h2>
+                    <% for(let rev of item.review){%>
+                        <div class="card my-3" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <b>
+                                        <%=rev.owner.username%>
+                                    </b>
+                                </h5>
+                                <p class="starability-result" data-rating=<%=rev.rating %> >
+                                    Rated: 3 stars
+                                </p>
+
+                                <p class="card-text">
+                                    <%=rev.text%>
+                                </p>
+                                <!-- only allow owner to delete comment and prevent other users -->
+                                <% if(currentUser && rev.owner.equals(currentUser._id)){%>
+                                    <form action="/campground/<%=item._id%>/review/<%=rev._id%>?_method=DELETE"
+                                        method="POST">
+                                        <button class="btn-danger mb-3">Delete comment</button>
+                                    </form>
+                                    <%}%>
+                            </div>
+                        </div>
+                        <%} %>
         </div>
+    </div>
     </div>

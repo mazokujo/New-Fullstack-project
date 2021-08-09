@@ -36,6 +36,8 @@ const seedDB = async () => {
         const randomprice = Math.floor(Math.random() * 1500) + 500;
         //new campground containing cities name and state name
         const camp = new Campground({
+            //associate all campgrounds to user id below
+            owner: '6107c21bc166683ffc99258d',
             location: `${cities[random1000].city}, ${cities[random1000].state}`,
             //sample function is used to pick element at random inside descriptors and places arrays
             title: `${sample(descriptors)} ${sample(places)}`,

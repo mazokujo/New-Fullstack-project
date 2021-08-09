@@ -9,12 +9,11 @@ const ReviewSchema = new Schema({
     rating: {
         type: Number,
         minimum: 1
-
-    }
-    // price: Number,
-    // image: String,
-    // description: String,
-    // location: String
+    },
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
 });
 //exporting Review model
 
