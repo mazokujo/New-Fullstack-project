@@ -42,9 +42,23 @@ const seedDB = async () => {
             //sample function is used to pick element at random inside descriptors and places arrays
             title: `${sample(descriptors)} ${sample(places)}`,
             //generate random pictures from unsplash
-            image: 'https://source.unsplash.com/collection//483251',
-            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis recusandae voluptatem tempora dolores sed exercitationem nostrum voluptatibus illum voluptas dolorem et animi, maiores magni molestiae voluptatum in dolor suscipit ducimus?',
-            price: randomprice
+            images: [
+                {
+                    url: 'https://res.cloudinary.com/dcsoakvpl/image/upload/v1628596672/Yelpcamp/oici9z9m63lnkqn0mphg.jpg',
+                    filename: 'Yelpcamp/oici9z9m63lnkqn0mphg'
+                },
+                {
+                    url: 'https://res.cloudinary.com/dcsoakvpl/image/upload/v1628596672/Yelpcamp/ntk40oprhlzfwjrcwxxv.jpg',
+                    filename: 'Yelpcamp/ntk40oprhlzfwjrcwxxv'
+                },
+                {
+                    url: 'https://res.cloudinary.com/dcsoakvpl/image/upload/v1628596672/Yelpcamp/lnyz9snieucjoeo4czw8.jpg',
+                    filename: 'Yelpcamp/lnyz9snieucjoeo4czw8'
+                }
+            ],
+            price: randomprice,
+            description: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab asperiores molestias facilis ullam placeat consequatur omnis quos nam odit quis sunt, veritatis nobis! Eveniet animi explicabo recusandae deserunt nam eum?'
+
         });
         // save new datas in Mongo
         await camp.save();

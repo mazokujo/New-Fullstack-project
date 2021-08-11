@@ -14,7 +14,7 @@
 
     <!-- New Bootstrap form -->
     <div class="col-6 offset-3">
-        <form action="/campground" method="POST" class="needs-validation" novalidate>
+        <form action="/campground" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
             <div class="form-group">
                 <label for="title"><b>Camp's title</b></label>
                 <input type="text" class="form-control" id="title" name="campground[title]"
@@ -33,10 +33,10 @@
             </div>
             <div class="form-group my-3">
                 <label for="image"><b>Image URL</b></label>
-                <input type="text" class="form-control" id="image" name="campground[image]"
-                    placeholder="Insert image URL" required>
+                <input type="file" class="form-control" id="image" name="campground[image]"
+                    placeholder="Insert image URL" required multiple>
                 <div class="valid-feedback">
-                    Awsome it's working!
+                    Awesome it's working!
                 </div>
             </div>
             <div class="form-group my-3">

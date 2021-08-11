@@ -1,22 +1,12 @@
 <%- layout('layouts/boilerplate') %>
     <h1 class="text-center">Edit campground <%=item.title%>
     </h1>
-    <!-- old Form -->
-
-    <!-- <form action="/campground/<%=item._id%>?_method=PUT" method="POST">
-        <label for="title">Camp's title</label> -->
-    <!-- name = campground[name] in case multiple data are inserted  -->
-    <!-- <input type="text" id="title" placeholder="insert the title" name="campground[title]" value="<%=item.title%>">
-        <label for="location">Camp's location</label>
-        <input type="text" id="location" placeholder="insert the location" name="campground[location]"
-            value="<%=item.location%>">
-        <button>Edit Campground</button>
-    </form> -->
 
     <!-- New Bootstrap form -->
 
     <div class="col-6 offset-3">
-        <form action="/campground/<%=item._id%>?_method=PUT" method="POST" novalidate class="needs-validation">
+        <form action="/campground/<%=item._id%>?_method=PUT" method="POST" novalidate class="needs-validation"
+            enctype="multipart/form-data">
             <div class="form-group">
                 <label for="title"><b>Camp's title</b></label>
                 <input type="text" class="form-control" id="title" name="campground[title]"
@@ -34,18 +24,11 @@
             <div class="valid-feedback">
                 Awsome it's working!
             </div>
-            <div class="form-group my-3">
-                <label for="image"><b>Image URL</b></label>
-                <input type="text" class="form-control" id="image" name="campground[image]"
-                    placeholder="Insert image URL" value="<%=item.image%>" required>
-                <div class="valid-feedback">
-                    Awsome it's working!
-                </div>
-            </div>
+
             <div class="form-group my-3 ">
                 <label for="description"><b>Camp's description</b></label>
                 <textarea class="form-control" id="desciption" name="campground[description]" id="description" cols="30"
-                    rows="10" required>"><%=item.description%></textarea>
+                    rows="10" required><%=item.description%></textarea>
                 <div class="valid-feedback">
                     Awsome it's working!
                 </div>
@@ -59,12 +42,23 @@
                     Awsome it's working!
                 </div>
             </div>
+            <div class="my-3">
+                <label for="image" class="form-label"><b>Add image</b></label>
+                <input class="form-control" type="file" id="image" multiple name="campground[image]">
+            </div>
+            <div class="my-3">
+                <% item.images.forEach((img,i)=>{%>
+                    <div class="form-check-inline">
+                        <input type="checkbox" id="image-<%=i%>" name="deleteImages[]" value="<%=img.filename%>">
+                    </div>
+                    <label for="image-<%=i%>">Delete?</label>
+                    <img src="<%=img.thumbnail%>" alt="" class="img-thumbnail">
+                    <% }) %>
+            </div>
             <div class="form-group my-3">
                 <button type="submit" class="btn btn-success">Edit Campground</button>
                 <a href="/campground" class="btn btn-danger">Cancel</a>
             </div>
-
-
         </form>
 
         <form action="/campground/<%=item._id%>?_method=DELETE" method="POST">

@@ -16,7 +16,7 @@ module.exports.isLoggedin = (req, res, next) => {
     }
     next();
 }
-//handle potentiel error in our campground model
+// handle potentiel error in our campground model
 module.exports.validateCampground = (req, res, next) => {
     const { error } = campgroundSchema.validate(req.body);
     console.log(error)
@@ -27,7 +27,7 @@ module.exports.validateCampground = (req, res, next) => {
         next();
     }
 }
-//is owner middleware
+// is owner middleware
 module.exports.isOwner = async (req, res, next) => {
     const { id } = req.params;
     const item = await Campground.findById(id).populate('owner');

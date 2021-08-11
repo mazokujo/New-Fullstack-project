@@ -8,18 +8,23 @@ const wrapAsync = require('../Errorhandling utilities/wrapAsync');
 const campground = require('../controllers/campground')
 //loggedin middleware, isOwner middleware, validate campground middleware
 const { isLoggedin, isOwner, validateCampground } = require('../middleware');
+//require multer and cloudinary packages
+const { storage } = require('../cloudinary')
+const multer = require('multer')
+const upload = multer({ storage })
 
 
 
 router.route('/')
     .get(wrapAsync(campground.index))
-    .post(validateCampground, isLoggedin, wrapAsync(campground.createCampground))
+    .post(upload.array('campground[image]'), validateCampground, isLoggedin, wrapAsync(campground.createCampground))
+
 
 
 router.get('/new', isLoggedin, campground.renderNewForm)
 
 router.route('/:id')
-    .put(isLoggedin, isOwner, validateCampground, wrapAsync(campground.editCampground))
+    .put(upload.array('campground[image]'), isLoggedin, isOwner, validateCampground, wrapAsync(campground.editCampground))
     .get(wrapAsync(campground.showCampground))
     .delete(isOwner, wrapAsync(campground.deleteCampground))
 

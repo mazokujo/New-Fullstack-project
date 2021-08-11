@@ -1,5 +1,9 @@
 
-// Example starter JavaScript for disabling form submissions if there are invalid fields
+// improve file browser functionnality
+// bsCustomFileInput.init()
+
+
+// JavaScript code for disabling form submissions if there are invalid fields
 (function () {
     'use strict';
     window.addEventListener('load', function () {

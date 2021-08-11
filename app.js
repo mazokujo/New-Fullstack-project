@@ -1,3 +1,12 @@
+if (process.env.NODE_ENV !== "production") {
+    require('dotenv').config();
+}
+
+console.log(process.env.CLOUDINARY_CLOUD_NAME)
+console.log(process.env.CLOUDINARY_API_KEY)
+console.log(process.env.CLOUDINARY_SECRET)
+
+
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -13,6 +22,9 @@ const methodOverride = require('method-override');
 const passport = require('passport')
 //require passport-local
 const localStrategy = require('passport-local')
+//require multer
+const multer = require('multer')
+const upload = multer({ dest: 'uploads/' })
 //require UserSchema
 const User = require('./models/user')
 //require new class for error handling: appError
