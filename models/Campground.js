@@ -22,7 +22,18 @@ const CampgroundSchema = new Schema({
     review: [{
         type: Schema.Types.ObjectId,
         ref: 'Review'
-    }]
+    }],
+    geometry: {
+        type: {
+            type: String,
+            enum: ['Point'],
+            required: true
+        },
+        coordinates: {
+            type: [Number],
+            required: true
+        }
+    }
 
 })
 //exporting Campground model
