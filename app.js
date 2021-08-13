@@ -26,6 +26,10 @@ const localStrategy = require('passport-local')
 //require multer
 const multer = require('multer')
 const upload = multer({ dest: 'uploads/' })
+//require mongoose express sanitise
+const mongoSanitize = require('express-mongo-sanitize');
+//require helmet
+const helmet = require("helmet");
 //require UserSchema
 const User = require('./models/user')
 //require new class for error handling: appError
@@ -67,11 +71,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // setting express-session and flash
 const sessionParam = {
+    name: 'kreativeK',
     secret: 'mysecret',
     resave: false,
     saveUninitialized: false,
     cookie: {
         httpOnly: true,
+        //secure:true,
         //specifies the life of a cookie, in our case 1 week
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
         maxAge: 1000 * 60 * 60 * 24 * 7
@@ -87,10 +93,60 @@ passport.use(new localStrategy(User.authenticate()));
 //serialise user and deserialise user(associaciate or disassociate the user to the session or log him out of the session)
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+//execute mongoose-express sanitise
+app.use(mongoSanitize());
+//execute helmet
+app.use(helmet());
+//provides specification for Content Security Policy middleware from helmet
+const scriptSrcUrls = [
+    "https://stackpath.bootstrapcdn.com/",
+    "https://api.tiles.mapbox.com/",
+    "https://api.mapbox.com/",
+    "https://kit.fontawesome.com/",
+    "https://cdnjs.cloudflare.com/",
+    "https://cdn.jsdelivr.net",
+];
+//This is the array that needs added to
+const styleSrcUrls = [
+    "https://kit-free.fontawesome.com/",
+    "https://api.mapbox.com/",
+    "https://api.tiles.mapbox.com/",
+    "https://fonts.googleapis.com/",
+    "https://use.fontawesome.com/",
+    "https://cdn.jsdelivr.net",
+];
+const connectSrcUrls = [
+    "https://api.mapbox.com/",
+    "https://a.tiles.mapbox.com/",
+    "https://b.tiles.mapbox.com/",
+    "https://events.mapbox.com/",
+];
+const fontSrcUrls = [];
+app.use(
+    helmet.contentSecurityPolicy({
+        directives: {
+            defaultSrc: [],
+            connectSrc: ["'self'", ...connectSrcUrls],
+            scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
+            styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+            workerSrc: ["'self'", "blob:"],
+            objectSrc: [],
+            imgSrc: [
+                "'self'",
+                "blob:",
+                "data:",
+                "https://res.cloudinary.com/dcsoakvpl/", //SHOULD MATCH YOUR CLOUDINARY ACCOUNT! 
+                "https://images.unsplash.com/",
+            ],
+            fontSrc: ["'self'", ...fontSrcUrls],
+        },
+    })
+);
 
 //flash message middleware can be access in every single request
 //we can also add req.user object, it will be accessed in every single request
 app.use((req, res, next) => {
+    console.log(req.query)
     console.log(req.session);
     if (!['/login', '/'].includes(req.originalUrl)) {
         req.session.returnTo = req.originalUrl

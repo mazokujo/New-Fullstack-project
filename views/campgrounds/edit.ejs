@@ -4,7 +4,7 @@
 
     <!-- New Bootstrap form -->
 
-    <div class="col-6 offset-3">
+    <div class="col-6 offset-md-3">
         <form action="/campground/<%=item._id%>?_method=PUT" method="POST" novalidate class="needs-validation"
             enctype="multipart/form-data">
             <div class="form-group">
@@ -48,11 +48,11 @@
             </div>
             <div class="my-3">
                 <% item.images.forEach((img,i)=>{%>
+                    <img src="<%=img.thumbnail%>" alt="" class="img-thumbnail">
                     <div class="form-check-inline">
                         <input type="checkbox" id="image-<%=i%>" name="deleteImages[]" value="<%=img.filename%>">
                     </div>
                     <label for="image-<%=i%>">Delete?</label>
-                    <img src="<%=img.thumbnail%>" alt="" class="img-thumbnail">
                     <% }) %>
             </div>
             <div class="form-group my-3">

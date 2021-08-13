@@ -9,9 +9,11 @@
         <hr>
         <p class="mb-0"> <b>Status Code: <%=err.status%> </b> </p>
         <hr>
+        <%if(process.env.NODE_ENV === "production"){%>
         <p>
           <%=err.stack%>
         </p>
+        <% } %> 
       </div>
     </div>
   </div>

@@ -9,6 +9,9 @@ const ImageSchema = new Schema({
 ImageSchema.virtual('thumbnail').get(function () {
     return this.url.replace('/upload', '/upload/w_200')
 })
+// opts helps to enable virtuals in JSON
+const opts = { toJSON: { virtuals: true } }
+
 const CampgroundSchema = new Schema({
     title: String,
     price: Number,
@@ -35,9 +38,11 @@ const CampgroundSchema = new Schema({
         }
     }
 
-})
-//exporting Campground model
+}, opts)
 
+CampgroundSchema.virtual('properties.popUpMarkup').get(function () {
+    return `<strong><a href="/campground/${this._id}">${this.title}</a></strong><p>${this.description}</p>`
+})
 
 // mongoose delete middleware
 //use of mongoose middleware to delete a farm and associated product
