@@ -2,7 +2,7 @@ mapboxgl.accessToken = mapToken;
 const map = new mapboxgl.Map({
     container: 'cluster-map',
     style: 'mapbox://styles/mapbox/light-v10',
-    center: [-103.5917, 40.6699],
+    center: [23.9137106762068,-28.3782721906973],
     zoom: 3
 });
 map.addControl(new mapboxgl.NavigationControl());
@@ -35,7 +35,7 @@ map.on('load', () => {
             'circle-color': [
                 'step',
                 ['get', 'point_count'],
-                
+
                 '#00BCD4',
                 5,
                 '#2196F3',
@@ -105,7 +105,7 @@ map.on('load', () => {
     map.on('click', 'unclustered-point', (e) => {
         console.log(e.features[0])
         const coordinates = e.features[0].geometry.coordinates.slice();
-        const {popUpMarkup} = e.features[0].properties
+        const { popUpMarkup } = e.features[0].properties
         // const mag = e.features[0].properties.mag;
         // const tsunami =
         //     e.features[0].properties.tsunami === 1 ? 'yes' : 'no';
