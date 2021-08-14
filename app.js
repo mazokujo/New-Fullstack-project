@@ -2,12 +2,6 @@ if (process.env.NODE_ENV !== "production") {
     require('dotenv').config();
 }
 
-console.log(process.env.CLOUDINARY_CLOUD_NAME)
-console.log(process.env.CLOUDINARY_API_KEY)
-console.log(process.env.CLOUDINARY_SECRET)
-console.log(process.env.MAPBOX_TOKEN)
-
-
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -30,6 +24,8 @@ const upload = multer({ dest: 'uploads/' })
 const mongoSanitize = require('express-mongo-sanitize');
 //require helmet
 const helmet = require("helmet");
+//require connect-mongo
+const MongoDBStore = require('connect-mongo');
 //require UserSchema
 const User = require('./models/user')
 //require new class for error handling: appError
@@ -41,7 +37,9 @@ const reviewRoutes = require('./router/review');
 //require User routes
 const userRoutes = require('./router/user');
 //mongoose connection, our database is yelpcamp
-mongoose.connect('mongodb://localhost:27017/yelpcamp', {
+
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/yelpcamp'
+mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
@@ -69,10 +67,24 @@ app.use(express.urlencoded({ extended: true }));
 //middleware to enable static files in our boilerplate
 app.use(express.static(path.join(__dirname, 'public')));
 
+//create new mongostore which change default storage of session from browser to mongo
+
+const secret = process.env.SECRET || 'mysecret'
+const store = new MongoDBStore({
+    mongoUrl: dbUrl,
+    secret,
+    touchAfter: 24 * 60 * 60
+})
+
+store.on('error', function (e) {
+    console.log("SESSION STORE ERROR", e)
+})
+
 // setting express-session and flash
 const sessionParam = {
+    store,
     name: 'kreativeK',
-    secret: 'mysecret',
+    secret,
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -143,6 +155,7 @@ app.use(
     })
 );
 
+
 //flash message middleware can be access in every single request
 //we can also add req.user object, it will be accessed in every single request
 app.use((req, res, next) => {
@@ -184,8 +197,9 @@ app.use((err, req, res, next) => {
     // change stack message
     res.status(status).render('error', { err });
 });
-app.listen(8080, () => {
-    console.log('Receiving from port 8080');
+const port = process.env.PORT || 8080
+app.listen(port, () => {
+    console.log(`Receiving from port ${port}`);
 });
 
 
